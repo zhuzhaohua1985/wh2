@@ -722,6 +722,7 @@ CREATE TABLE `t_stat_area` (
 	`online` INT(11) NOT NULL COMMENT '最大网吧在线数量',
 	`offline` INT(11) NOT NULL COMMENT '最大网吧离线数量',
 	`login` INT(11) NOT NULL COMMENT '最大网吧用户数',
+	`rankno` CHAR(1) NOT NULL COMMENT '地区类别 1省2市3区',
 	PRIMARY KEY (`area_code`, `stat_date`)
 )
 COMMENT='区域统计历史信息'
