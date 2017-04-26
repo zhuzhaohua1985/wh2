@@ -514,50 +514,6 @@ CREATE TABLE `t_role_user` (
 INSERT INTO `t_role_user` VALUES ('1', '1', '1');
 INSERT INTO `t_role_user` VALUES ('2', '3', '2');
 
--- ----------------------------
--- Table structure for `t_stat_client`
--- ----------------------------
-DROP TABLE IF EXISTS `t_stat_client`;
-CREATE TABLE `t_stat_client` (
-  `id` bigint(20) NOT NULL DEFAULT '0' COMMENT '主键id',
-  `wbzch` varchar(20) DEFAULT NULL COMMENT '网吧注册号',
-  `rq` date DEFAULT NULL COMMENT '日期',
-  `sfsgx` varchar(20) DEFAULT NULL COMMENT '是否上线过（true/false）',
-  `zxzds` bigint(20) DEFAULT NULL COMMENT '在线终端数',
-  `lxzds` bigint(20) DEFAULT NULL COMMENT '离线终端数',
-  `yxzds` bigint(20) DEFAULT NULL COMMENT '有效终端数（与文化客户端保持30分钟在线）',
-  `fwdbb` varchar(20) DEFAULT NULL COMMENT '服务端版本号',
-  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '操作时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_stat_client
--- ----------------------------
-INSERT INTO `t_stat_client` VALUES ('1', '4101020001', '2017-04-23', 'true', '30', '10', '29', '4.1', '2017-04-23 18:19:45');
-INSERT INTO `t_stat_client` VALUES ('2', '4116220002', '2017-04-23', 'false', '50', '10', '40', '4.1', '2017-04-23 18:24:01');
-INSERT INTO `t_stat_client` VALUES ('3', '4116220003', '2017-04-23', 'true', '60', '20', '40', '4.2', '2017-04-23 18:24:49');
-
--- ----------------------------
--- Table structure for `t_stat_netbar`
--- ----------------------------
-DROP TABLE IF EXISTS `t_stat_netbar`;
-CREATE TABLE `t_stat_netbar` (
-  `id` bigint(20) NOT NULL DEFAULT '0' COMMENT '主键id',
-  `qhdm` varchar(20) DEFAULT NULL COMMENT '行政区划代码',
-  `rq` date DEFAULT NULL COMMENT '日期',
-  `zxwb` bigint(20) DEFAULT NULL COMMENT '在线网吧数',
-  `lxwb` bigint(20) DEFAULT NULL COMMENT '离线网吧数',
-  `jqzs` bigint(20) DEFAULT NULL COMMENT '机器总数',
-  `yhzs` bigint(20) DEFAULT NULL COMMENT '用户总数（用户最大数）',
-  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '操作日期',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_stat_netbar
--- ----------------------------
-INSERT INTO `t_stat_netbar` VALUES ('1', '411600', '2017-04-23', '100', '50', '150', '500', '2017-04-23 18:21:59');
 
 -- ----------------------------
 -- Table structure for `t_sys_code`
@@ -702,3 +658,61 @@ CREATE TABLE `t_sys_user` (
 -- ----------------------------
 INSERT INTO `t_sys_user` VALUES ('1', 'admin', null, 'admin', '21232f297a57a5a743894a0e4a801fc3', '0', null, null, null, null, '1', null, null, null, '1', '1', '2017-02-13 09:58:47');
 INSERT INTO `t_sys_user` VALUES ('2', 'test', '', 'test', '098f6bcd4621d373cade4e832627b4f6', null, null, null, '', '', '2', '', '', null, '0', '1', '2017-02-17 13:54:19');
+
+
+
+
+
+
+
+
+DROP TABLE IF EXISTS `t_server_info`;
+CREATE TABLE `t_server_info` (
+	`id` VARCHAR(50) NOT NULL COMMENT '服务器MAC地址',
+	`bar_id` VARCHAR(50) NOT NULL COMMENT '网吧ID',
+	`ip` VARCHAR(50) NOT NULL COMMENT '服务器IP地址',
+	`pc_name` VARCHAR(50) NOT NULL COMMENT '服务器名称',
+	`os_type` INT(11) NOT NULL COMMENT '服务器操作系统类型',
+	`os_version` VARCHAR(50) NOT NULL COMMENT '服务器操作系统版本',
+	`creator` VARCHAR(50) NOT NULL COMMENT '创建者',
+	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+	PRIMARY KEY (`id`)
+)
+COMMENT='服务器信息表'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+DROP TABLE IF EXISTS `t_pc_info`;
+CREATE TABLE `t_pc_info` (
+	`id` VARCHAR(50) NOT NULL COMMENT '客户机MAC地址',
+	`bar_id` VARCHAR(50) NOT NULL COMMENT '网吧ID',
+	`ip` VARCHAR(50) NOT NULL COMMENT '客户机IP地址',
+	`pc_name` VARCHAR(50) NOT NULL COMMENT '客户机主机名',
+	`os_type` INT(11) NOT NULL COMMENT '客户机操作系统类型',
+	`os_version` VARCHAR(50) NOT NULL COMMENT '客户机操作系统版本',
+	`creator` VARCHAR(50) NOT NULL COMMENT '创建者',
+	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+	PRIMARY KEY (`id`)
+)
+COMMENT='网吧客户机基本信息'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+
+DROP TABLE IF EXISTS `t_stat_net_bar`;
+CREATE TABLE `t_stat_net_bar` (
+	`bar_id` VARCHAR(10) NOT NULL COMMENT '网吧注册号',
+	`stat_date` DATE NOT NULL COMMENT ' 统计日期',
+	`online` INT(11) NOT NULL COMMENT '最大在线终端数',
+	`offline` INT(11) NOT NULL COMMENT '最小离线终端数',
+	`valid` INT(11) NOT NULL COMMENT '最大有效终端数',
+	`login` INT(11) NOT NULL COMMENT '最大登录用户数',
+	`area_code` VARCHAR(6) NOT NULL COMMENT '县代码',
+	`city_code` VARCHAR(6) NOT NULL COMMENT '市代码',
+	PRIMARY KEY (`bar_id`, `stat_date`)
+)
+COMMENT='网吧日统计信息'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+
+
