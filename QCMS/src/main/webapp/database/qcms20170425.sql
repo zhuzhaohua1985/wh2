@@ -715,4 +715,16 @@ COMMENT='网吧日统计信息'
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 
-
+DROP TABLE IF EXISTS `t_stat_area`;
+CREATE TABLE `t_stat_area` (
+	`area_code` VARCHAR(6) NOT NULL COMMENT '区域代码',
+	`stat_date` DATE NOT NULL COMMENT '统计日期',
+	`online` INT(11) NOT NULL COMMENT '最大网吧在线数量',
+	`offline` INT(11) NOT NULL COMMENT '最大网吧离线数量',
+	`login` INT(11) NOT NULL COMMENT '最大网吧用户数',
+	PRIMARY KEY (`area_code`, `stat_date`)
+)
+COMMENT='区域统计历史信息'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
