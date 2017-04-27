@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-04-25 23:09:09
+Date: 2017-04-27 23:16:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -226,40 +226,74 @@ INSERT INTO `t_areas_code` VALUES ('419000', '省直辖县级行政区划', '2')
 INSERT INTO `t_areas_code` VALUES ('419001', '济源市', '3');
 
 -- ----------------------------
+-- Table structure for `t_file_bar`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_file_bar`;
+CREATE TABLE `t_file_bar` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `fileId` bigint(11) DEFAULT NULL COMMENT '文件id',
+  `barid` varchar(255) DEFAULT NULL COMMENT '网吧id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_file_bar
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `t_file_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_file_info`;
+CREATE TABLE `t_file_info` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '文件id',
+  `filename` varchar(100) DEFAULT NULL COMMENT '文件名称',
+  `version` varchar(50) DEFAULT NULL COMMENT '版本号',
+  `md5` varchar(100) DEFAULT NULL,
+  `flag` char(1) DEFAULT NULL COMMENT '文件所在模块（1-服务端，2-客户端）',
+  `type` char(1) DEFAULT NULL COMMENT '文件类型（0-忽略，1-dll，2-exe）',
+  `action` char(1) DEFAULT NULL COMMENT '启用方式（0-忽略，1-加载dll，2-运行exe）',
+  `is_apply` char(1) DEFAULT NULL COMMENT '是否应用到所有网吧0-是，1-否',
+  `data` blob COMMENT '文件二进制数组',
+  `creator` int(11) DEFAULT NULL COMMENT '创建人',
+  `create_time` date DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` int(11) DEFAULT NULL COMMENT '最后修改人',
+  `last_modify_time` date DEFAULT NULL COMMENT '最后修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_file_info
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `t_net_bar`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_net_bar`;
 CREATE TABLE `t_net_bar` (
-	`id` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '网吧注册号（barId）主键',
-	`net_bar_name` VARCHAR(100) NULL DEFAULT NULL COMMENT '网吧名称',
-	`business_reg_no` VARCHAR(10) NOT NULL COMMENT '工商注册号（唯一）',
-	`city_code` VARCHAR(6) NULL DEFAULT NULL COMMENT '市代码',
-	`area_code` VARCHAR(6) NULL DEFAULT NULL COMMENT '区代码',
-	`server_version` VARCHAR(50) NULL DEFAULT NULL COMMENT '服务端版本',
-	`client_version` VARCHAR(50) NULL DEFAULT NULL COMMENT '客户端版本',
-	`address_name` VARCHAR(100) NULL DEFAULT NULL COMMENT '网吧地址名称',
-	`contact_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '联系人姓名',
-	`contact_tel` VARCHAR(20) NULL DEFAULT NULL COMMENT '联系人手机号',
-	`client_total` INT(10) NULL DEFAULT NULL COMMENT '客户机总数',
-	`outside_network` VARCHAR(50) NULL DEFAULT NULL COMMENT '外网地址',
-	`inside_network` VARCHAR(50) NULL DEFAULT NULL COMMENT '内网地址',
-	`server_mac` VARCHAR(50) NULL DEFAULT NULL COMMENT '服务器mac地址',
-	`creator` VARCHAR(20) NULL DEFAULT NULL,
-	`create_time` TIMESTAMP NULL DEFAULT NULL,
-	`status` INT(1) NOT NULL DEFAULT '1' COMMENT '1：有效；0：无效',
-	PRIMARY KEY (`id`),
-	UNIQUE INDEX `business_reg_no` (`business_reg_no`) USING BTREE
-)
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
+  `id` varchar(50) NOT NULL DEFAULT '' COMMENT '网吧注册号（barId）主键',
+  `net_bar_name` varchar(100) DEFAULT NULL COMMENT '网吧名称',
+  `business_reg_no` varchar(10) NOT NULL COMMENT '工商注册号（唯一）',
+  `city_code` varchar(6) DEFAULT NULL COMMENT '市代码',
+  `area_code` varchar(6) DEFAULT NULL COMMENT '区代码',
+  `server_version` varchar(50) DEFAULT NULL COMMENT '服务端版本',
+  `client_version` varchar(50) DEFAULT NULL COMMENT '客户端版本',
+  `address_name` varchar(100) DEFAULT NULL COMMENT '网吧地址名称',
+  `contact_name` varchar(50) DEFAULT NULL COMMENT '联系人姓名',
+  `contact_tel` varchar(20) DEFAULT NULL COMMENT '联系人手机号',
+  `client_total` int(10) DEFAULT NULL COMMENT '客户机总数',
+  `outside_network` varchar(50) DEFAULT NULL COMMENT '外网地址',
+  `inside_network` varchar(50) DEFAULT NULL COMMENT '内网地址',
+  `server_mac` varchar(50) DEFAULT NULL COMMENT '服务器mac地址',
+  `creator` varchar(20) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT '1：有效；0：无效',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `business_reg_no` (`business_reg_no`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_net_bar
 -- ----------------------------
-INSERT INTO `t_net_bar` VALUES ('4101020001', '中原区网吧', '12345678', '410100 410102', '郑州市 中原区', '张三', '12345678911', '200', null, '127.0.0.1', '127.0.0.1', null, null, '1');
-INSERT INTO `t_net_bar` VALUES ('4116220001', '开封市网吧', '123456', '411600 411622', '周口市  西华县', '张三', '12345678911', '200', null, '127.0.0.1', '127.0.0.1', '1', '2017-04-23 11:21:13', '1');
-INSERT INTO `t_net_bar` VALUES ('4116220002', '西华县网吧', '1234561212', '411600 411622', '周口市  西华县', '张三', '12345678911', '200', null, '127.0.0.1', '127.0.0.1', null, null, '1');
 
 -- ----------------------------
 -- Table structure for `t_qc_case`
@@ -520,6 +554,50 @@ CREATE TABLE `t_role_user` (
 INSERT INTO `t_role_user` VALUES ('1', '1', '1');
 INSERT INTO `t_role_user` VALUES ('2', '3', '2');
 
+-- ----------------------------
+-- Table structure for `t_stat_client`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_stat_client`;
+CREATE TABLE `t_stat_client` (
+  `id` bigint(20) NOT NULL DEFAULT '0' COMMENT '主键id',
+  `wbzch` varchar(20) DEFAULT NULL COMMENT '网吧注册号',
+  `rq` date DEFAULT NULL COMMENT '日期',
+  `sfsgx` varchar(20) DEFAULT NULL COMMENT '是否上线过（true/false）',
+  `zxzds` bigint(20) DEFAULT NULL COMMENT '在线终端数',
+  `lxzds` bigint(20) DEFAULT NULL COMMENT '离线终端数',
+  `yxzds` bigint(20) DEFAULT NULL COMMENT '有效终端数（与文化客户端保持30分钟在线）',
+  `fwdbb` varchar(20) DEFAULT NULL COMMENT '服务端版本号',
+  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_stat_client
+-- ----------------------------
+INSERT INTO `t_stat_client` VALUES ('1', '4101020001', '2017-04-23', 'true', '30', '10', '29', '4.1', '2017-04-23 18:19:45');
+INSERT INTO `t_stat_client` VALUES ('2', '4116220002', '2017-04-23', 'false', '50', '10', '40', '4.1', '2017-04-23 18:24:01');
+INSERT INTO `t_stat_client` VALUES ('3', '4116220003', '2017-04-23', 'true', '60', '20', '40', '4.2', '2017-04-23 18:24:49');
+
+-- ----------------------------
+-- Table structure for `t_stat_netbar`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_stat_netbar`;
+CREATE TABLE `t_stat_netbar` (
+  `id` bigint(20) NOT NULL DEFAULT '0' COMMENT '主键id',
+  `qhdm` varchar(20) DEFAULT NULL COMMENT '行政区划代码',
+  `rq` date DEFAULT NULL COMMENT '日期',
+  `zxwb` bigint(20) DEFAULT NULL COMMENT '在线网吧数',
+  `lxwb` bigint(20) DEFAULT NULL COMMENT '离线网吧数',
+  `jqzs` bigint(20) DEFAULT NULL COMMENT '机器总数',
+  `yhzs` bigint(20) DEFAULT NULL COMMENT '用户总数（用户最大数）',
+  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '操作日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_stat_netbar
+-- ----------------------------
+INSERT INTO `t_stat_netbar` VALUES ('1', '411600', '2017-04-23', '100', '50', '150', '500', '2017-04-23 18:21:59');
 
 -- ----------------------------
 -- Table structure for `t_sys_code`
@@ -598,6 +676,9 @@ CREATE TABLE `t_sys_node` (
 -- ----------------------------
 -- Records of t_sys_node
 -- ----------------------------
+INSERT INTO `t_sys_node` VALUES ('1', 'QC数据导入', '1', '0', '1', null, 'QC数据导入', '10', '/work/info/3', 'file-text-o', '0', '', '1', '2017-02-13 09:58:47');
+INSERT INTO `t_sys_node` VALUES ('2', '缺陷管理', '2', '1', '1', null, '用户管理', '30', '/defect/list', '', '0', null, '1', '2017-02-13 09:58:47');
+INSERT INTO `t_sys_node` VALUES ('3', '案例管理', '2', '1', '1', null, '用户管理', '30', '/case/list', '', '0', null, '1', '2017-02-13 09:58:47');
 INSERT INTO `t_sys_node` VALUES ('4', '系统管理', '1', '0', '1', null, '系统管理', '100', '', 'gears', '0', '', '1', '2017-02-13 09:58:47');
 INSERT INTO `t_sys_node` VALUES ('5', '部门管理', '2', '4', '1', null, '部门管理', '30', '/group/list', '', '0', null, '1', '2017-02-13 09:58:47');
 INSERT INTO `t_sys_node` VALUES ('6', '用户管理', '2', '4', '1', null, '用户管理', '30', '/user/list', '', '0', null, '1', '2017-02-13 09:58:47');
@@ -609,7 +690,7 @@ INSERT INTO `t_sys_node` VALUES ('11', '删除缺陷', '3', '2', '3', 'defect:de
 INSERT INTO `t_sys_node` VALUES ('12', '添加案例', '3', '3', '3', 'case:add', '添加案例', '10', '', '', '0', '', '1', '2017-02-14 16:24:26');
 INSERT INTO `t_sys_node` VALUES ('13', '删除案例', '3', '3', '3', 'case:del', '删除案例', '20', '', '', '0', '', '1', '2017-02-14 16:25:12');
 INSERT INTO `t_sys_node` VALUES ('14', '网吧管理', '1', '0', '1', '', '网吧管理', '20', '/netbarList/list', 'file-text-o', '0', '', '1', '2017-04-23 20:03:53');
-INSERT INTO `t_sys_node` VALUES ('15', '网吧注册', '2', '14', '1', '', '网吧注册', null, '/netbar/regList', '', '0', '', '1', '2017-04-23 20:04:48');
+INSERT INTO `t_sys_node` VALUES ('15', '网吧列表', '2', '14', '1', '', '网吧列表', null, '/netbarList/list', '', '0', '', '1', '2017-04-23 20:04:48');
 
 -- ----------------------------
 -- Table structure for `t_sys_role`
@@ -657,81 +738,11 @@ CREATE TABLE `t_sys_user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of t_sys_user
 -- ----------------------------
 INSERT INTO `t_sys_user` VALUES ('1', 'admin', null, 'admin', '21232f297a57a5a743894a0e4a801fc3', '0', null, null, null, null, '1', null, null, null, '1', '1', '2017-02-13 09:58:47');
 INSERT INTO `t_sys_user` VALUES ('2', 'test', '', 'test', '098f6bcd4621d373cade4e832627b4f6', null, null, null, '', '', '2', '', '', null, '0', '1', '2017-02-17 13:54:19');
-
-
-
-
-
-
-
-
-DROP TABLE IF EXISTS `t_server_info`;
-CREATE TABLE `t_server_info` (
-	`id` VARCHAR(50) NOT NULL COMMENT '服务器MAC地址',
-	`bar_id` VARCHAR(50) NOT NULL COMMENT '网吧ID',
-	`ip` VARCHAR(50) NOT NULL COMMENT '服务器IP地址',
-	`pc_name` VARCHAR(50) NOT NULL COMMENT '服务器名称',
-	`os_type` INT(11) NOT NULL COMMENT '服务器操作系统类型',
-	`os_version` VARCHAR(50) NOT NULL COMMENT '服务器操作系统版本',
-	`creator` VARCHAR(50) NOT NULL COMMENT '创建者',
-	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-	PRIMARY KEY (`id`)
-)
-COMMENT='服务器信息表'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
-
-DROP TABLE IF EXISTS `t_pc_info`;
-CREATE TABLE `t_pc_info` (
-	`id` VARCHAR(50) NOT NULL COMMENT '客户机MAC地址',
-	`bar_id` VARCHAR(50) NOT NULL COMMENT '网吧ID',
-	`ip` VARCHAR(50) NOT NULL COMMENT '客户机IP地址',
-	`pc_name` VARCHAR(50) NOT NULL COMMENT '客户机主机名',
-	`os_type` INT(11) NOT NULL COMMENT '客户机操作系统类型',
-	`os_version` VARCHAR(50) NOT NULL COMMENT '客户机操作系统版本',
-	`creator` VARCHAR(50) NOT NULL COMMENT '创建者',
-	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-	PRIMARY KEY (`id`)
-)
-COMMENT='网吧客户机基本信息'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-
-DROP TABLE IF EXISTS `t_stat_net_bar`;
-CREATE TABLE `t_stat_net_bar` (
-	`bar_id` VARCHAR(10) NOT NULL COMMENT '网吧注册号',
-	`stat_date` DATE NOT NULL COMMENT ' 统计日期',
-	`online` INT(11) NOT NULL COMMENT '最大在线终端数',
-	`offline` INT(11) NOT NULL COMMENT '最小离线终端数',
-	`valid` INT(11) NOT NULL COMMENT '最大有效终端数',
-	`login` INT(11) NOT NULL COMMENT '最大登录用户数',
-	`area_code` VARCHAR(6) NOT NULL COMMENT '县代码',
-	`city_code` VARCHAR(6) NOT NULL COMMENT '市代码',
-	PRIMARY KEY (`bar_id`, `stat_date`)
-)
-COMMENT='网吧日统计信息'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-
-DROP TABLE IF EXISTS `t_stat_area`;
-CREATE TABLE `t_stat_area` (
-	`area_code` VARCHAR(6) NOT NULL COMMENT '区域代码',
-	`stat_date` DATE NOT NULL COMMENT '统计日期',
-	`online` INT(11) NOT NULL COMMENT '最大网吧在线数量',
-	`offline` INT(11) NOT NULL COMMENT '最大网吧离线数量',
-	`login` INT(11) NOT NULL COMMENT '最大网吧用户数',
-	`rankno` CHAR(1) NOT NULL COMMENT '地区类别 1省2市3区',
-	PRIMARY KEY (`area_code`, `stat_date`)
-)
-COMMENT='区域统计历史信息'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
+INSERT INTO `t_sys_user` VALUES ('3', 'sh-jgy', '', 'sh-jgy', 'c4ca4238a0b923820dcc509a6f75849b', null, null, null, '', '', null, '', '', null, '0', '1', '2017-04-26 23:07:24');
