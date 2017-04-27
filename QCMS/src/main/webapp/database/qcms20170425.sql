@@ -230,23 +230,29 @@ INSERT INTO `t_areas_code` VALUES ('419001', '济源市', '3');
 -- ----------------------------
 DROP TABLE IF EXISTS `t_net_bar`;
 CREATE TABLE `t_net_bar` (
-  `id` varchar(50) NOT NULL DEFAULT '' COMMENT '网吧注册号（barId）主键',
-  `net_bar_name` varchar(100) DEFAULT NULL COMMENT '网吧名称',
-  `business_reg_no` varchar(10) NOT NULL COMMENT '工商注册号（唯一）',
-  `address_code` varchar(500) DEFAULT NULL COMMENT '网吧地址代码',
-  `address_name` varchar(100) DEFAULT NULL COMMENT '网吧地址名称',
-  `contact_name` varchar(50) DEFAULT NULL COMMENT '联系人姓名',
-  `contact_tel` varchar(20) DEFAULT NULL COMMENT '联系人手机号',
-  `client_total` int(10) DEFAULT NULL COMMENT '客户机总数',
-  `outside_network` varchar(50) DEFAULT NULL COMMENT '外网地址',
-  `inside_network` varchar(50) DEFAULT NULL COMMENT '内网地址',
-  `server_mac` varchar(50) DEFAULT NULL COMMENT '服务器mac地址',
-  `creator` varchar(20) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT '1' COMMENT '1：有效；0：无效',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `business_reg_no` (`business_reg_no`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	`id` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '网吧注册号（barId）主键',
+	`net_bar_name` VARCHAR(100) NULL DEFAULT NULL COMMENT '网吧名称',
+	`business_reg_no` VARCHAR(10) NOT NULL COMMENT '工商注册号（唯一）',
+	`city_code` VARCHAR(6) NULL DEFAULT NULL COMMENT '市代码',
+	`area_code` VARCHAR(6) NULL DEFAULT NULL COMMENT '区代码',
+	`server_version` VARCHAR(50) NULL DEFAULT NULL COMMENT '服务端版本',
+	`client_version` VARCHAR(50) NULL DEFAULT NULL COMMENT '客户端版本',
+	`address_name` VARCHAR(100) NULL DEFAULT NULL COMMENT '网吧地址名称',
+	`contact_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '联系人姓名',
+	`contact_tel` VARCHAR(20) NULL DEFAULT NULL COMMENT '联系人手机号',
+	`client_total` INT(10) NULL DEFAULT NULL COMMENT '客户机总数',
+	`outside_network` VARCHAR(50) NULL DEFAULT NULL COMMENT '外网地址',
+	`inside_network` VARCHAR(50) NULL DEFAULT NULL COMMENT '内网地址',
+	`server_mac` VARCHAR(50) NULL DEFAULT NULL COMMENT '服务器mac地址',
+	`creator` VARCHAR(20) NULL DEFAULT NULL,
+	`create_time` TIMESTAMP NULL DEFAULT NULL,
+	`status` INT(1) NOT NULL DEFAULT '1' COMMENT '1：有效；0：无效',
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `business_reg_no` (`business_reg_no`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
 
 -- ----------------------------
 -- Records of t_net_bar
