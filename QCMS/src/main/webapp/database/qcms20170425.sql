@@ -746,3 +746,72 @@ CREATE TABLE `t_sys_user` (
 INSERT INTO `t_sys_user` VALUES ('1', 'admin', null, 'admin', '21232f297a57a5a743894a0e4a801fc3', '0', null, null, null, null, '1', null, null, null, '1', '1', '2017-02-13 09:58:47');
 INSERT INTO `t_sys_user` VALUES ('2', 'test', '', 'test', '098f6bcd4621d373cade4e832627b4f6', null, null, null, '', '', '2', '', '', null, '0', '1', '2017-02-17 13:54:19');
 INSERT INTO `t_sys_user` VALUES ('3', 'sh-jgy', '', 'sh-jgy', 'c4ca4238a0b923820dcc509a6f75849b', null, null, null, '', '', null, '', '', null, '0', '1', '2017-04-26 23:07:24');
+
+
+
+DROP TABLE IF EXISTS `t_server_info`;
+CREATE TABLE `t_server_info` (
+	`id` VARCHAR(50) NOT NULL COMMENT '服务器MAC地址',
+	`bar_id` VARCHAR(50) NOT NULL COMMENT '网吧ID',
+	`ip` VARCHAR(50) NOT NULL COMMENT '服务器IP地址',
+	`pc_name` VARCHAR(50) NOT NULL COMMENT '服务器名称',
+	`os_type` INT(11) NOT NULL COMMENT '服务器操作系统类型',
+	`os_version` VARCHAR(50) NOT NULL COMMENT '服务器操作系统版本',
+	`wenhua_ver` VARCHAR(50) NOT NULL COMMENT '文化客户端把那本',
+	`creator` VARCHAR(50) NOT NULL COMMENT '创建者',
+	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+	PRIMARY KEY (`id`)
+)
+COMMENT='服务器信息表'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+DROP TABLE IF EXISTS `t_pc_info`;
+CREATE TABLE `t_pc_info` (
+	`id` VARCHAR(50) NOT NULL COMMENT '客户机MAC地址',
+	`bar_id` VARCHAR(50) NOT NULL COMMENT '网吧ID',
+	`ip` VARCHAR(50) NOT NULL COMMENT '客户机IP地址',
+	`pc_name` VARCHAR(50) NOT NULL COMMENT '客户机主机名',
+	`os_type` INT(11) NOT NULL COMMENT '客户机操作系统类型',
+	`os_version` VARCHAR(50) NOT NULL COMMENT '客户机操作系统版本',
+	`wenhua_ver` VARCHAR(50) NOT NULL COMMENT '文化客户端版本',
+	`creator` VARCHAR(50) NOT NULL COMMENT '创建者',
+	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+	PRIMARY KEY (`id`)
+)
+COMMENT='网吧客户机基本信息'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+DROP TABLE IF EXISTS `t_stat_net_bar`;
+CREATE TABLE `t_stat_net_bar` (
+	`bar_id` VARCHAR(10) NOT NULL COMMENT '网吧注册号',
+	`stat_date` DATE NOT NULL COMMENT ' 统计日期',
+	`online` INT(11) NOT NULL COMMENT '最大在线终端数',
+	`offline` INT(11) NOT NULL COMMENT '最小离线终端数',
+	`valid` INT(11) NOT NULL COMMENT '最大有效终端数',
+	`login` INT(11) NOT NULL COMMENT '最大登录用户数',
+	`area_code` VARCHAR(6) NOT NULL COMMENT '县代码',
+	`city_code` VARCHAR(6) NOT NULL COMMENT '市代码',
+	PRIMARY KEY (`bar_id`, `stat_date`)
+)
+COMMENT='网吧日统计信息'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+
+DROP TABLE IF EXISTS `t_stat_area`;
+CREATE TABLE `t_stat_area` (
+	`area_code` VARCHAR(6) NOT NULL COMMENT '区域代码',
+	`stat_date` DATE NOT NULL COMMENT '统计日期',
+	`online` INT(11) NOT NULL COMMENT '最大网吧在线数量',
+	`offline` INT(11) NOT NULL COMMENT '最大网吧离线数量',
+	`login` INT(11) NOT NULL COMMENT '最大网吧用户数',
+	`rankno` CHAR(1) NOT NULL COMMENT '地区类别 1省2市3区',
+	PRIMARY KEY (`area_code`, `stat_date`)
+)
+COMMENT='区域统计历史信息'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
